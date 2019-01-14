@@ -1,0 +1,74 @@
+<?php
+  $user=$_POST['obi'];
+  session_start();
+  $db = new PDO('sqlite:db\emel.db');
+  echo $user;
+  $query = $db->query(sprintf("SELECT * FROM users where username= :username;"));
+  $query->execute([':username'=> $user]);
+  $result = $query->fetchAll();
+  foreach ($result as $finally)
+  {
+    $users[]=$finally['username'];
+    $Uid[]=$finally['id'];
+    $isAdmin[]=$finally['isAdmin'];
+  }
+
+  if (count($result) !=0){
+    print_r($users);
+    print_r($Uid);
+    print_r($isAdmin);
+    $_SESSION['username'] = $username;
+    $_SESSION['success'] = "You are now logged in";  }
+?>
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Welcome To the DarkSide</title>
+  </head>
+  <body>
+    <form action="index.php" method="post">
+      What is your Name: <input type="text" name="username"><br>
+      <input type="submit" name="login" value="submit">
+    </form>
+  </body>
+</html>
+require "vendor/autoload.php";
+
+use App\SQLiteConnection;
+
+if (isset($_POST["username"])){
+  $user= $_POST["username"];
+  $pdo = (new SQLiteConnection())->SelectUser($user);
+  if ($pdo !=null) {
+    print_r($pdo);
+    echo "$user is a normal user";
+  }
+  else {
+    echo "user not found!";
+  }
+}
+<?php
+require "vendor/autoload.php";
+
+use App\SQLiteConnection;
+use App\SQLiteSelect;
+
+/**$pdo = (new SQLiteConnection())->connect();
+  if ($pdo!=null) {
+    echo "Connected to the SQLite database successfully...";
+  }
+  else {
+    echo "Whoops, couldnt...";
+  }**/
+$user= $_POST['username'];
+$pdo = (new SQLiteSelect())->SelectUser($user);
+if ($pdo !=null) {
+  echo "user is: $user";
+}
+else {
+  echo "user not found!";
+}
+?>
