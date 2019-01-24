@@ -1,4 +1,6 @@
 <?php
+require "vendor/autoload.php";
+use App\SQLiteConnection;
 
 $db = new PDO('sqlite:db\emel.db');
 if ($ACodeNE==0) {
@@ -34,32 +36,22 @@ foreach ($result as $finally) {
 }
 
 for ($i=0; $i <count($Convid) ; $i++) {
-$htmli.='<div class="conv">
-  <div class="ConName">
-    conversation:'. $Convid[$i].'
-  </div>
-  <div class="ConSubject">
-    conversation: '.$subject[$i].'
-  </div>
-  <div class="ConAlert">
-    <i class="far fa-envelope"></i>
-  </div>
-</div>';
+  $pdo=(new SQLiteConnection())->MessageList($Convid[$i]);
+  print_r($pdo);
+  $htmli.='<div class="conv">
+    <div class="ConName">
+        conversation:'. $Convid[$i].'
+      </div>
+      <div class="ConSubject">
+        conversation: '.$subject[$i].'
+      </div>
+      <div class="ConAlert">
+        <i class="far fa-envelope"></i>
+      </div>
+    </div>';
 }
-/*function(){
-  $query = $db->query(sprintf("SELECT * FROM isUnread));
-  $results = $query->fetchAll();
+/*$pdo=(new SQLiteConnection())->MessageList(1);
+print_r($pdo);
+echo "<li>".$pdo[messageText]."</li>";*/
 
-  foreach ($result as $finally) {
-    $Convid[]=$finally['id'];
-    $user1[]=$finally['sender'];
-    $user2[]=$finally['receiver'];
-    $subject[]=$finally['subject'];
-  }
-
-  if ($user1 =) {
-    # code...
-  }
-}*/
-
- ?>
+?>

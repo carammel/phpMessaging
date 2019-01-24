@@ -72,3 +72,30 @@ else {
   echo "user not found!";
 }
 ?>
+
+<?php
+$db = new PDO('sqlite:db\emel.db');
+if (isset($_POST['submit'])) {
+  $query = $db->query(sprintf("INSERT INTO Conversation(sender,receiver,subject) values (:sender,:receiver,:subject);"));
+  $query->execute([':sender'=> $UserIDNE,':receiver'=> 2,':subject'=> $_POST['subject'],]);
+  echo "inserted to Conversation Table";
+  $lastInsertID= $db->lastInsertID();
+  $query = $db->query(sprintf("INSERT INTO Message(CID,messageText) values (:CID,:messageText)"));
+  $query->execute([':CID'=> 5,':messageText'=>$_POST['messageText'],]);
+  $query->execute([':messageText'=> $_POST['messageText']]);
+  echo "inserted";
+}
+?>
+<?php
+  echo gettype($_POST['StartConversation']);
+  if ($_POST['StartConversation'] !== null)
+  {
+    include('writingmessage.php');
+  }
+ ?>
+<!––<label for="obi">What is your Subject ?</label>-->
+<!––<input type="text" class="form-control form-control-lg" name="subject"><br>-->
+<!––<label for="message">What is your Message?</label>-->
+<!––<input type="text" class="form-control form-control-lg" name="messageText"><br>-->
+
+HOME.PHP -----

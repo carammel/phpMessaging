@@ -1,9 +1,8 @@
 <?php include('server.php');
-$adimNE= $_SESSION['username'];
+$adimNe= $_SESSION['username'];
 $UserIDNE= (int)$_SESSION['uid'];
 $ACodeNE=(int)$_SESSION['acode'];
-include('conv.php');
-include('message.php')
+include('convList.php');
  ?>
 
 <!DOCTYPE html>
@@ -19,22 +18,27 @@ include('message.php')
   <title>HOME</title>
 </head>
   <body>
-    <div class="container">
-      <div class="row justify-content-center">
+	<div class="container">
+	  <div class="row justify-content-center">
+		<div class="col-sm">
+		  <h2>Conversations</h2><br>
+			<?php
+			echo "$htmli"; ?>
+		</div>
         <div class="col-sm">
-          <h2>Conversations</h2><br>
-            <?php  echo "$htmli"; ?>
+            <?php
+            if ($ACodeNE==0){
+                echo
+                '<form action="writingMessage.php" method="post">
+                    <input type="submit" class="btn btn-primary" name="StartConversation" value="Start Conversation">
+                </form>';
+            }
+            else{
+                echo "Only customers can start a conversation";
+            }
+            ?>
         </div>
-        <div class="col-sm">
-          <form action="home.php" method="post">
-            <label for="obi">What is your Subject ?</label>
-            <input type="text" class="form-control form-control-lg" name="subject"><br>
-            <label for="message">What is your Message?</label>
-            <input type="text" class="form-control form-control-lg" name="messageText"><br>
-            <input type="submit" class="btn btn-primary" name="submit" value="Start Conversation">
-          </form>
-        </div>
-      </div>
-    </div>
+	  </div>
+	</div>
   </body>
 </html>

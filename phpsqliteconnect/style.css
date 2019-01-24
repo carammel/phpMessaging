@@ -8,5 +8,6 @@ body {
 }
 
 .conv{
-  border: solid 2px aqua;
+  border: solid 2px orangered;
+  margin: 2px;
 }
