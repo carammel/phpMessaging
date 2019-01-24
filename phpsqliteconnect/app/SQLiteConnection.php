@@ -67,7 +67,6 @@ class SQLiteConnection {
 
         foreach ($messages as $finally){
             $id[]=$finally['id'];
-            $CID[]=$finally['CID'];
             $messageText[]=$finally['messageText'];
         }
 
