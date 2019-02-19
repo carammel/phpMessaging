@@ -21,9 +21,7 @@
      <div class="container">
        <div class="row justify-content-center">
          <div class="col-sm">
-           <h2>Message Writing</h2><br>
-         </div>
-         <div class="col-sm">
+             <h1><a href="Home.php" class="badge badge-danger">Home</a></h1>
            <form action="writingMessage.php" method="post">
              <label for="obi">What is your Subject ?</label>
              <input type="text" class="form-control form-control-lg" name="subject"><br>

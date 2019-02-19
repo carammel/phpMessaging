@@ -36,31 +36,29 @@ foreach ($result as $finally) {
 }
 
 for ($i=0; $i <count($Convid) ; $i++) {
-    $x = $Convid[$i];
-  $htmli.='<div class="conv">
-    <div class="ConName">
-     conversation: '.$Convid[$i].'
-      </div>
-      <div class="ConSubject">
-        conversation: '.$subject[$i].'
-      </div>
-      <div class="ConAlert">
-        <i class="far fa-envelope"></i>
-      </div>
-      <div class="button">
-      <form action="" method="post">
-         <input type="submit" name="ShowMessages" value="Show Messages">
-         <input type="hidden" name="Convid" value="'.$Convid[$i].'">
-      </form>
-      </div>
-    </div>';
+    $htmli.=
+        '<div class="conv">
+                <div class="ConName">
+                 conversation: '.$Convid[$i].'
+                  </div>
+                  <div class="ConSubject">
+                    conversation: '.$subject[$i].'
+                  </div>
+                  <div class="ConAlert">
+                    <i class="far fa-envelope"></i>
+                  </div>
+                  <div class="button">
+                      <form action="" method="post">
+                         <input type="submit" name="ShowMessages" value="Show Messages">
+                         <input type="hidden" name="Convid" value='.$Convid[$i].'>
+                      </form>
+                  </div>
+        </div>';
 }
 
-if ($_POST['ShowMessages'] != null)
+if (isset($_POST['ShowMessages']))
 {
-    $name = $_POST['Convid'];
-    echo $_POST['Convid'];
-    $messages=(new SQLiteConnection())->MessageList($_POST['name']);
+    $messages=(new SQLiteConnection())->MessageList($_POST['Convid']);
     for ($i=0; $i <count($messages) ; $i++) {
         if ($UserIDNE==$messages[$i]['sender']) {
             $htmli2 .= '<div class="messtext-sended">
@@ -74,9 +72,20 @@ if ($_POST['ShowMessages'] != null)
             $htmli2 .=
                 '<div class="messtext-recived justify-content-end">
         '. $result[0]['username'] .' : ' . $messages[$i]['messageText'] . '
-        </div>';
+                </div>';
         }
     }
+    $htmli2 .= '<div class="button">
+                    <form action="" method="post">
+                        Hello '.$adimNe.' Write your message here!!
+                        <input class="form-control form-control" type="text" name="WriteMessage" value=""><br>
+                        <input type="hidden" name="Convid" value='.$_POST['Convid'].'>
+                        <input type="hidden" name="UserIDNE" value='.$UserIDNE.'>
+                        <input type="submit" class="btn btn-primary" name="SendMessage" value="Send Message">
+                    </form>
+                    </div>';
 }
-
+if (isset($_POST['SendMessage'])) {
+    include('SendMessage.php');
+}
 ?>

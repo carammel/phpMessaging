@@ -3,7 +3,6 @@ $adimNe= $_SESSION['username'];
 $UserIDNE= (int)$_SESSION['uid'];
 $ACodeNE=(int)$_SESSION['acode'];
 include('convList.php');
-include('AddMessage.php');
 ?>
 
 <!DOCTYPE html>
@@ -45,13 +44,6 @@ include('AddMessage.php');
                 <?php
                 echo "$htmli2";
                 ?>
-            </div>
-            <div class="button">
-            <form action="home.php" method="post">
-                Write your message here!!
-                <input class="form-control form-control" type="text" name="WriteMessage" value=""><br>
-                <input type="submit" class="btn btn-primary" name="SendMessage" value="Send Message">
-            </form>
             </div>
         </div>
     </div>
