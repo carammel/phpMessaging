@@ -1,6 +1,7 @@
 <?php
 require "vendor/autoload.php";
 use App\SQLiteConnection;
+include('SendMessage.php');
 
 $db = new PDO('sqlite:db\emel.db');
 if ($ACodeNE==0) {
@@ -84,8 +85,5 @@ if (isset($_POST['ShowMessages']))
                         <input type="submit" class="btn btn-primary" name="SendMessage" value="Send Message">
                     </form>
                     </div>';
-}
-if (isset($_POST['SendMessage'])) {
-    include('SendMessage.php');
 }
 ?>
