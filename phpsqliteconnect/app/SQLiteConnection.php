@@ -59,17 +59,17 @@ class SQLiteConnection {
         if ($this->pdo == null) {
             $this->pdo = new \PDO("sqlite:" . Config::PATH_TO_SQLITE_FILE);
         }
-        $stmt = $this->pdo->query("SELECT id, CID, messageText FROM Message WHERE CID = :CID;");
+        $stmt = $this->pdo->query("SELECT id, CID,sender, messageText FROM Message WHERE CID = :CID;");
         $stmt->execute([':CID'=> $CID]);
         // for storing task
 
         $messages = $stmt ->fetchAll();
 
-        foreach ($messages as $finally){
-            $id[]=$finally['id'];
-            $messageText[]=$finally['messageText'];
+        foreach ($messages as $results){
+            $id[]= $results['id'];
+            $ConvID[] = $results['CID'];
+            $sender[]= $results['sender'];
         }
-
         /*while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $messages[] = [
                 'id' => $row['id'],
@@ -88,19 +88,16 @@ class SQLiteConnection {
         //$query = $this->pdo->query(sprintf("INSERT INTO Conversation(sender,receiver,subject) values (:sender,:receiver,:subject);"));
         $query = $this->pdo->prepare("INSERT INTO Conversation(sender,receiver,subject) values (:sender,:receiver,:subject);");
         $query->execute([':sender'=> $sender,':receiver'=> 2,':subject'=> $subject,]);
-
         return "success";
           }
 
-    public function AddMessage($CID,$sender, $receiver, $messageText)
+    public function AddMessage($CID,$sender, $messageText)
     {
         if ($this->pdo == null) {
             $this->pdo = new \PDO("sqlite:" . Config::PATH_TO_SQLITE_FILE);
         }
-        //$query = $this->pdo->query(sprintf("INSERT INTO Conversation(sender,receiver,subject) values (:sender,:receiver,:subject);"));
-        $query = $this->pdo->prepare("INSERT INTO Conversation(CID,sender,receiver,messageText) values (:CID,:receiver,:sender,:messageText);");
-        $query->execute([':CID'=> $CID,'sender'=>$sender,'receiver'=>$receiver,':messageText'=> $messageText,]);
-
+        $query = $this->pdo->prepare("INSERT INTO Message(CID,sender,messageText) values (:CID,:sender,:messageText);");
+        $query->execute([':CID'=> $CID,'sender'=>$sender,':messageText'=> $messageText,]);
         return "success";
     }
 }

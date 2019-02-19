@@ -11,3 +11,20 @@ body {
   border: solid 2px orangered;
   margin: 2px;
 }
+
+.messagebox{
+  border: solid 2px orangered;
+  margin: 2px;
+  hight: 300px;
+}
+
+.messtext-sended{
+  border: solid 2px;
+  margin: 2px;
+  border-color: aqua;
+}
+.messtext-recived{
+  border: solid 2px;
+  margin: 2px;
+  border-color: blueviolet;
+}

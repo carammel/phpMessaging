@@ -27,12 +27,14 @@
            <form action="writingMessage.php" method="post">
              <label for="obi">What is your Subject ?</label>
              <input type="text" class="form-control form-control-lg" name="subject"><br>
-             <label for="message">What is your Message?</label>
-             <input type="text" class="form-control form-control-lg" name="messageText"><br>
              <input type="submit" class="btn btn-primary" name="SendConversation" value="Send Conversation">
                <a class="btn btn-primary" href="Home.php" role="button">Go Back To Conversations</a>
            </form>
-           <?php  include('AddConv.php'); ?>
+           <?php
+           if (isset($_POST['SendConversation'])){
+               include('AddConv.php');
+           }
+           ?>
          </div>
        </div>
      </div>

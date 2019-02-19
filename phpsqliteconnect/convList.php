@@ -36,11 +36,10 @@ foreach ($result as $finally) {
 }
 
 for ($i=0; $i <count($Convid) ; $i++) {
-  $pdo=(new SQLiteConnection())->MessageList($Convid[$i]);
-  print_r($pdo);
+    $x = $Convid[$i];
   $htmli.='<div class="conv">
     <div class="ConName">
-        conversation:'. $Convid[$i].'
+     conversation: '.$Convid[$i].'
       </div>
       <div class="ConSubject">
         conversation: '.$subject[$i].'
@@ -48,10 +47,36 @@ for ($i=0; $i <count($Convid) ; $i++) {
       <div class="ConAlert">
         <i class="far fa-envelope"></i>
       </div>
+      <div class="button">
+      <form action="" method="post">
+         <input type="submit" name="ShowMessages" value="Show Messages">
+         <input type="hidden" name="Convid" value="'.$Convid[$i].'">
+      </form>
+      </div>
     </div>';
 }
-/*$pdo=(new SQLiteConnection())->MessageList(1);
-print_r($pdo);
-echo "<li>".$pdo[messageText]."</li>";*/
+
+if ($_POST['ShowMessages'] != null)
+{
+    $name = $_POST['Convid'];
+    echo $_POST['Convid'];
+    $messages=(new SQLiteConnection())->MessageList($_POST['name']);
+    for ($i=0; $i <count($messages) ; $i++) {
+        if ($UserIDNE==$messages[$i]['sender']) {
+            $htmli2 .= '<div class="messtext-sended">
+            '. $adimNe .' : ' . $messages[$i]['messageText'] . '
+            </div>';
+        }
+        else {
+            $query = $db->query(sprintf("SELECT username FROM users where id= :id;"));
+            $query->execute([':id'=> $messages[$i]['sender']]);
+            $result = $query->fetchAll();
+            $htmli2 .=
+                '<div class="messtext-recived justify-content-end">
+        '. $result[0]['username'] .' : ' . $messages[$i]['messageText'] . '
+        </div>';
+        }
+    }
+}
 
 ?>
