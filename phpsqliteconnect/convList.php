@@ -47,17 +47,18 @@ for ($i=0; $i <count($Convid) ; $i++) {
                   </div>
                   <div class="ConAlert">
                     <i class="far fa-envelope"></i>
+                  
                   </div>
                   <div class="button">
                       <form action="" method="post">
                          <input type="submit" name="ShowMessages" value="Show Messages">
                          <input type="hidden" name="Convid" value='.$Convid[$i].'>
                       </form>
-                  </div>
+                  </div> 
         </div>';
 }
 
-if (isset($_POST['ShowMessages']))
+if (isset($_POST['ShowMessages']) OR $X )
 {
     $messages=(new SQLiteConnection())->MessageList($_POST['Convid']);
     for ($i=0; $i <count($messages) ; $i++) {

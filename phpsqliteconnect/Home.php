@@ -3,6 +3,7 @@ $adimNe= $_SESSION['username'];
 $UserIDNE= (int)$_SESSION['uid'];
 $ACodeNE=(int)$_SESSION['acode'];
 include('convList.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -44,6 +45,7 @@ include('convList.php');
                 <?php
                 echo "$htmli2";
                 ?>
+
             </div>
         </div>
     </div>
